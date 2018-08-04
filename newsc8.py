@@ -1808,7 +1808,7 @@ def ririnBot(op):
                                     else:
                                     	ririn.sendMessage(op.param1, "ᴍʙʟᴏ ☞ @! ☜ \nɴɢɪɴᴛɪᴘ ᴅᴏᴀɴɢ ʟᴜ\nsɪɴɪ ɢᴀʙᴜɴɢ", [op.param2])
                                 else:
-                                	ririn.sendMessage(op.param1, "ᴛᴏɴɢ ☞ @! ☜ \nɴɢᴀᴘᴀɪɴ ʟᴜ...\nɢᴀʙᴜɴɢ ᴄʜᴀᴛ sɪɴɪ", [op.param2])
+                                	ririn.sendMessage(op.param1, "Nah ☞ @! ☜ \nɴɢᴀᴘᴀɪɴ ʟᴜ...\nɢᴀʙᴜɴɢ ᴄʜᴀᴛ sɪɴɪ", [op.param2])
                         else:
                             pass
                     else:
