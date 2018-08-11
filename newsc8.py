@@ -24,25 +24,25 @@ channelToken = line.getChannelResult()
 line.log("Channel Token : " + str(channelToken))
 
 readOpen = codecs.open("read.json","r","utf-8")
-waitOpen = codecs.open("temp.json","r","utf-8")
+SettingsOpen = codecs.open("temp.json","r","utf-8")
 
 lineMID = line.profile.mid
 lineProfile = line.getProfile()
-linewait = line.getwait()
+lineSettings = line.getSettings()
 oepoll = OEPoll(line)
 
 read = json.load(readOpen)
-wait = json.load(waitOpen)
+Settings = json.load(SettingsOpen)
 
-#wait["myProfile"]["displayName"] = lineProfile.displayName 
-#wait["myProfile"]["statusMessage"] = lineProfile.statusMessage
-#wait["myProfile"]["pictureStatus"] = lineProfile.pictureStatus
+#Settings["myProfile"]["displayName"] = lineProfile.displayName 
+#Settings["myProfile"]["statusMessage"] = lineProfile.statusMessage
+#Settings["myProfile"]["pictureStatus"] = lineProfile.pictureStatus
 
 #==============================================================================#
 #                                                            EDITED BY. SEPRI
 # GA ADA YANG PERLU DISOMBONGIN KALAU MASIH PAKE BOT ORANG
 #==============================!!!!!!!!!!===========================================#
-wait = {
+Settings = {
     "autoAdd": False,
     "autoJoin": False,
     "autoLeave": False,
@@ -180,7 +180,7 @@ def mentionMembers(to, mid):
 
 def backupData():
     try:
-        backup = wait
+        backup = Settings
         f = codecs.open('temp.json','w','utf-8')
         json.dump(backup, f, sort_keys=True, indent=4, ensure_ascii=False)
         backup = read
@@ -429,16 +429,16 @@ def lineBot(op):
             return
         if op.type == 5:
             print ("[ 5 ] NOTIFIED ADD CONTACT")
-            if wait["autoAdd"] == True:
+            if Settings["autoAdd"] == True:
                 line.sendMessage(op.param1, "Halo {} terimakasih telah menambahkan saya sebagai teman :D".format(str(line.getContact(op.param1).displayName)))
         if op.type == 13:
             print ("[ 13 ] NOTIFIED INVITE GROUP")
             group = line.getGroup(op.param1)
-            if wait["autoJoin"] == True:
+            if Settings["autoJoin"] == True:
                 line.acceptGroupInvitation(op.param1)
         if op.type == 24:
             print ("[ 24 ] NOTIFIED LEAVE ROOM")
-            if wait["autoLeave"] == True:
+            if Settings["autoLeave"] == True:
                 line.leaveRoom(op.param1)
         if op.type == 25:
             print ("[ 25 ] SEND MESSAGE")
@@ -508,57 +508,57 @@ def lineBot(op):
                 elif text.lower() == 'status':
                     try:
                         ret_ = "╔══[ Status ]"
-                        if wait["autoAdd"] == True: ret_ += "\n╠[✪✪➣ Auto Add ⏯️"
+                        if Settings["autoAdd"] == True: ret_ += "\n╠[✪✪➣ Auto Add ⏯️"
                         else: ret_ += "\n╠[✪✪➣ Auto Add ⏹"
-                        if wait["autoJoin"] == True: ret_ += "\n╠[✪✪➣ Auto Join ⏯️"
+                        if Settings["autoJoin"] == True: ret_ += "\n╠[✪✪➣ Auto Join ⏯️"
                         else: ret_ += "\n╠[✪✪➣ Auto Join ⏹"
-                        if wait["autoLeave"] == True: ret_ += "\n╠[✪✪➣ Auto Leave ⏯️"
+                        if Settings["autoLeave"] == True: ret_ += "\n╠[✪✪➣ Auto Leave ⏯️"
                         else: ret_ += "\n╠[✪✪➣ Auto Leave ⏹"
-                        if wait["autoRead"] == True: ret_ += "\n╠[✪✪➣ Auto Read ⏯️"
+                        if Settings["autoRead"] == True: ret_ += "\n╠[✪✪➣ Auto Read ⏯️"
                         else: ret_ += "\n╠[✪✪➣ Auto Read ⏹"
-                        if wait["checkSticker"] == True: ret_ += "\n╠[✪✪➣ Check Sticker ⏯️"
+                        if Settings["checkSticker"] == True: ret_ += "\n╠[✪✪➣ Check Sticker ⏯️"
                         else: ret_ += "\n╠[✪✪➣ Check Sticker ⏹"
-                        if wait["detectMention"] == True: ret_ += "\n╠[✪✪➣ Detect Mention ⏯️"
+                        if Settings["detectMention"] == True: ret_ += "\n╠[✪✪➣ Detect Mention ⏯️"
                         else: ret_ += "\n╠[✪✪➣ Detect Mention ⏹"
                         ret_ += "\n╚══[ Status ]"
                         line.sendMessage(to, str(ret_))
                     except Exception as e:
                         line.sendMessage(msg.to, str(e))
                 elif text.lower() == 'autoadd on':
-                    wait["autoAdd"] = True
+                    Settings["autoAdd"] = True
                     line.sendMessage(to, "Berhasil mengaktifkan Auto Add")
                 elif text.lower() == 'autoadd off':
-                    wait["autoAdd"] = False
+                    Settings["autoAdd"] = False
                     line.sendMessage(to, "Berhasil menonaktifkan Auto Add")
                 elif text.lower() == 'autojoin on':
-                    wait["autoJoin"] = True
+                    Settings["autoJoin"] = True
                     line.sendMessage(to, "Berhasil mengaktifkan Auto Join")
                 elif text.lower() == 'autojoin off':
-                    wait["autoJoin"] = False
+                    Settings["autoJoin"] = False
                     line.sendMessage(to, "Berhasil menonaktifkan Auto Join")
                 elif text.lower() == 'autoleave on':
-                    wait["autoLeave"] = True
+                    Settings["autoLeave"] = True
                     line.sendMessage(to, "Berhasil mengaktifkan Auto Leave")
                 elif text.lower() == 'autojoin off':
-                    wait["autoLeave"] = False
+                    Settings["autoLeave"] = False
                     line.sendMessage(to, "Berhasil menonaktifkan Auto Leave")
                 elif text.lower() == 'autoread on':
-                    wait["autoRead"] = True
+                    Settings["autoRead"] = True
                     line.sendMessage(to, "Berhasil mengaktifkan Auto Read")
                 elif text.lower() == 'autoread off':
-                    wait["autoRead"] = False
+                    Settings["autoRead"] = False
                     line.sendMessage(to, "Berhasil menonaktifkan Auto Read")
                 elif text.lower() == 'checksticker on':
-                    wait["checkSticker"] = True
+                    Settings["checkSticker"] = True
                     line.sendMessage(to, "Berhasil mengaktifkan Check Details Sticker")
                 elif text.lower() == 'checksticker off':
-                    wait["checkSticker"] = False
+                    Settings["checkSticker"] = False
                     line.sendMessage(to, "Berhasil menonaktifkan Check Details Sticker")
                 elif text.lower() == 'detectmention on':
-                    wait["datectMention"] = True
+                    Settings["datectMention"] = True
                     line.sendMessage(to, "Berhasil mengaktifkan Detect Mention")
                 elif text.lower() == 'detectmention off':
-                    wait["datectMention"] = False
+                    Settings["datectMention"] = False
                     line.sendMessage(to, "Berhasil menonaktifkan Detect Mention")
 #==============================================================================#
                 elif text.lower() == 'me':
@@ -701,7 +701,7 @@ def lineBot(op):
                         targets.append(x["M"])
                     for target in targets:
                         try:
-                            wait["mimic"]["target"][target] = True
+                            Settings["mimic"]["target"][target] = True
                             line.sendMessage(msg.to,"Target ditambahkan!")
                             break
                         except:
@@ -715,18 +715,18 @@ def lineBot(op):
                         targets.append(x["M"])
                     for target in targets:
                         try:
-                            del wait["mimic"]["target"][target]
+                            del Settings["mimic"]["target"][target]
                             line.sendMessage(msg.to,"Target dihapuskan!")
                             break
                         except:
                             line.sendMessage(msg.to,"Deleted Target Fail !")
                             break
                 elif text.lower() == 'mimiclist':
-                    if wait["mimic"]["target"] == {}:
+                    if Settings["mimic"]["target"] == {}:
                         line.sendMessage(msg.to,"Tidak Ada Target")
                     else:
                         mc = "╔══[ Mimic List ]"
-                        for mi_d in wait["mimic"]["target"]:
+                        for mi_d in Settings["mimic"]["target"]:
                             mc += "\n╠[✪✪➣ "+line.getContact(mi_d).displayName
                         line.sendMessage(msg.to,mc + "\n╚══[ Finish ]")
                     
@@ -734,12 +734,12 @@ def lineBot(op):
                     sep = text.split(" ")
                     mic = text.replace(sep[0] + " ","")
                     if mic == "on":
-                        if wait["mimic"]["status"] == False:
-                            wait["mimic"]["status"] = True
+                        if Settings["mimic"]["status"] == False:
+                            Settings["mimic"]["status"] = True
                             line.sendMessage(msg.to,"Reply Message on")
                     elif mic == "off":
-                        if wait["mimic"]["status"] == True:
-                            wait["mimic"]["status"] = False
+                        if Settings["mimic"]["status"] == True:
+                            Settings["mimic"]["status"] = False
                             line.sendMessage(msg.to,"Reply Message off")
 #==============================================================================#
                 elif text.lower() == 'groupcreator':
@@ -763,7 +763,7 @@ def lineBot(op):
                             ticket = line.reissueGroupTicket(to)
                             line.sendMessage(to, "[ Group Ticket ]\nhttps://line.me/R/ti/g/{}".format(str(ticket)))
                         else:
-                            line.sendMessage(to, "Grup qr tidak terbuka silahkan buka terlebih dahulu dengan perintah {}openqr".format(str(wait["keyCommand"])))
+                            line.sendMessage(to, "Grup qr tidak terbuka silahkan buka terlebih dahulu dengan perintah {}openqr".format(str(Settings["keyCommand"])))
                 elif text.lower() == 'groupticket on':
                     if msg.toType == 2:
                         group = line.getGroup(to)
@@ -846,21 +846,21 @@ def lineBot(op):
                                     line.sendText(receiver, cctv['sidermem'][msg.to])
 
                 elif text.lower() == 'welcome on':
-                   if wait["Sambutan"] == True:
-                       if wait["lang"] == "JP":
+                   if Settings["Sambutan"] == True:
+                       if Settings["lang"] == "JP":
                            line.sendMessage(msg.to,"Sudah On")
                    else:
-                       wait["Sambutan"] = True
-                       if wait["lang"] == "JP":
+                       Settings["Sambutan"] = True
+                       if Settings["lang"] == "JP":
                            line.sendMessage(msg.to,"Sambutan Di Aktifkan")
 
                 elif text.lower() == 'welcome off':
-                   if wait["Sambutan"] == False:
-                       if wait["lang"] == "JP":
+                   if Settings["Sambutan"] == False:
+                       if Settings["lang"] == "JP":
                           line.sendMessage(msg.to,"Sudah Off")
                    else: 
-                       wait["Sambutan"] = False
-                       if wait["lang"] == "JP":
+                       Settings["Sambutan"] = False
+                       if Settings["lang"] == "JP":
                            line.sendMessage(msg.to,"Sambutan Di Nonaktifkan")
 
 #==============================================================================#          
@@ -880,12 +880,12 @@ def lineBot(op):
                                     line.sendMessage(to, "Total {} Mention".format(str(len(nama))))
 #===================================================================#
                 elif text.lower() == 'changepictureprofile':
-                            wait["changePicture"] = True
+                            Settings["changePicture"] = True
                             line.sendMessage(to, "Silahkan kirim gambarnya")
                 elif text.lower() == 'changegrouppicture':
                             if msg.toType == 2:
-                                if to not in wait["changeGroupPicture"]:
-                                    wait["changeGroupPicture"].append(to)
+                                if to not in Settings["changeGroupPicture"]:
+                                    Settings["changeGroupPicture"].append(to)
                                 line.sendMessage(to, "Silahkan kirim gambarnya")
 
 
@@ -1034,13 +1034,13 @@ def lineBot(op):
                     cctv['point'][msg.to] = msg.id
                     cctv['sidermem'][msg.to] = ""
                     cctv['cyduk'][msg.to]=True 
-                    wait["Sider"] = True
+                    Settings["Sider"] = True
                     line.sendMessage(msg.to,"Cek Sider already on")
 
                 elif text.lower() == 'sider off':
                     if msg.to in cctv['point']:
                        cctv['cyduk'][msg.to]=False
-                       wait["Sider"] = False
+                       Settings["Sider"] = False
                        line.sendMessage(msg.to,"Cek Sider already off")
                     else:
                         line.sendMessage(msg.to,"Cek Sider already off")
@@ -2325,7 +2325,7 @@ def lineBot(op):
                     sep = text.split(" ")
                     search = text.replace(sep[0] + " ","")
                     with requests.session() as web:
-                        web.headers["User-Agent"] = random.choice(wait["userAgent"])
+                        web.headers["User-Agent"] = random.choice(Settings["userAgent"])
                         r = web.get("https://www.instagram.com/{}/?__a=1".format(search))
                         try:
                             data = json.loads(r.text)
@@ -2379,7 +2379,7 @@ def lineBot(op):
                     separate = msg.text.split(" ")
                     search = msg.text.replace(separate[0] + " ","")
                     with requests.session() as web:
-                        web.headers["User-Agent"] = random.choice(wait["userAgent"])
+                        web.headers["User-Agent"] = random.choice(Settings["userAgent"])
                         r = web.get("http://rahandiapi.herokuapp.com/imageapi?key=betakey&q={}".format(urllib.parse.quote(search)))
                         data = r.text
                         data = json.loads(data)
@@ -2394,7 +2394,7 @@ def lineBot(op):
                     search = text.replace(sep[0] + " ","")
                     params = {"search_query": search}
                     with requests.session() as web:
-                        web.headers["User-Agent"] = random.choice(wait["userAgent"])
+                        web.headers["User-Agent"] = random.choice(Settings["userAgent"])
                         r = web.get("https://www.youtube.com/results", params = params)
                         soup = BeautifulSoup(r.content, "html5lib")
                         ret_ = "╔══[ Youtube Result ]"
@@ -2447,7 +2447,7 @@ def lineBot(op):
                     search = text.replace(sep[0] + " ","")
                     params = {'songname': search}
                     with requests.session() as web:
-                        web.headers["User-Agent"] = random.choice(wait["userAgent"])
+                        web.headers["User-Agent"] = random.choice(Settings["userAgent"])
                         r = web.get("https://ide.fdlrcn.com/workspace/yumi-apis/joox?" + urllib.parse.urlencode(params))
                         try:
                             data = json.loads(r.text)
@@ -2468,7 +2468,7 @@ def lineBot(op):
                         except:
                             line.sendMessage(to, "Lirik tidak ditemukan")
             elif msg.contentType == 7:
-                if wait["checkSticker"] == True:
+                if Settings["checkSticker"] == True:
                     stk_id = msg.contentMetadata['STKID']
                     stk_ver = msg.contentMetadata['STKVER']
                     pkg_id = msg.contentMetadata['STKPKGID']
@@ -2481,15 +2481,15 @@ def lineBot(op):
                     line.sendMessage(to, str(ret_))
 
             elif msg.contentType == 1:
-                    if wait["changePicture"] == True:
+                    if Settings["changePicture"] == True:
                         path = line.downloadObjectMsg(msg_id)
-                        wait["changePicture"] = False
+                        Settings["changePicture"] = False
                         line.updateProfilePicture(path)
                         line.sendMessage(to, "Berhasil mengubah foto profile")
                     if msg.toType == 2:
-                        if to in wait["changeGroupPicture"]:
+                        if to in Settings["changeGroupPicture"]:
                             path = line.downloadObjectMsg(msg_id)
-                            wait["changeGroupPicture"].remove(to)
+                            Settings["changeGroupPicture"].remove(to)
                             line.updateGroupPicture(to, path)
                             line.sendMessage(to, "Berhasil mengubah foto group")
 
@@ -2509,12 +2509,12 @@ def lineBot(op):
                     to = receiver
             else:
                 to = receiver
-                if wait["autoRead"] == True:
+                if Settings["autoRead"] == True:
                     line.sendChatChecked(to, msg_id)
                 if to in read["readPoint"]:
                     if sender not in read["ROM"][to]:
                         read["ROM"][to][sender] = True
-                if sender in wait["mimic"]["target"] and wait["mimic"]["status"] == True and wait["mimic"]["target"][sender] == True:
+                if sender in Settings["mimic"]["target"] and Settings["mimic"]["status"] == True and Settings["mimic"]["target"][sender] == True:
                     text = msg.text
                     if text is not None:
                         line.sendMessage(msg.to,text)
@@ -2526,12 +2526,12 @@ def lineBot(op):
                         lists = []
                         for mention in mentionees:
                             if lineMID in mention["M"]:
-                              if wait["detectMention"] == True:
+                              if Settings["detectMention"] == True:
                                  sendMention(receiver, sender, "", "❂➣ᴀᴜᴛᴏʀᴇsᴘᴏɴ ɴɪᴇᴛᴀ \n╭━━🌹━━━━━━━━━━━━━ \n┃Lu pikir gratis tag gue \n┃bayar donk \n╰━━━━━━━━━━━━━🌹━━╯ ")
 
         if op.type == 17:
            print ("MEMBER JOIN TO GROUP")
-           if wait["Sambutan"] == True:
+           if Settings["Sambutan"] == True:
              if op.param2 in lineMID:
                  return
              ginfo = line.getGroup(op.param1)
@@ -2542,7 +2542,7 @@ def lineBot(op):
 
         if op.type == 15:
            print ("MEMBER LEAVE TO GROUP")
-           if wait["Sambutan"] == True:
+           if Settings["Sambutan"] == True:
              if op.param2 in lineMID:
                  return
              ginfo = line.getGroup(op.param1)
